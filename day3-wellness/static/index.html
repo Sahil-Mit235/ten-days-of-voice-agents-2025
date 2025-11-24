@@ -1,0 +1,95 @@
+﻿<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Wellness Companion — Auto Check-in</title>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <style>
+    body{font-family:system-ui;background:#0b1220;color:#e6eef8;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}
+    .card{width:800px;max-width:96vw;padding:20px;border-radius:10px;background:#071022;box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+    h1{margin:0 0 8px 0;font-size:20px}
+    #transcript{min-height:100px;background:#04101a;padding:12px;border-radius:8px;white-space:pre-wrap}
+    .muted{color:#9fb0c7;font-size:13px}
+    button{padding:8px 12px;border-radius:8px;border:0;background:#7c3aed;color:white;cursor:pointer}
+    audio{display:none;width:100%;margin-top:10px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Wellness Companion — Auto Mode</h1>
+    <div class="muted">Click anywhere to allow mic — the agent will listen, reply and resume listening.</div>
+    <div id="transcript">No input yet.</div>
+    <div style="margin-top:12px">
+      <button id="showLog">Show recent history</button>
+    </div>
+    <audio id="replyAudio" controls></audio>
+    <pre id="log" style="display:none;background:#04101a;padding:10px;border-radius:6px;margin-top:12px"></pre>
+  </div>
+
+<script>
+const transcript = document.getElementById('transcript');
+const replyAudio = document.getElementById('replyAudio');
+const showLog = document.getElementById('showLog');
+const logEl = document.getElementById('log');
+
+let recognition = null;
+let lastSent = '';
+
+if(!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+  transcript.innerText = 'SpeechRecognition not supported. Use Chrome/Edge.';
+} else {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.continuous = true;
+
+  recognition.onresult = async (ev) => {
+    let text = '';
+    for(let i = ev.resultIndex; i < ev.results.length; ++i) {
+      if(ev.results[i].isFinal) text += ev.results[i][0].transcript + ' ';
+    }
+    text = text.trim();
+    if(text && text !== lastSent) {
+      lastSent = text;
+      transcript.innerText = 'You: ' + text;
+      await sendToServer(text);
+    }
+  };
+
+  recognition.onend = () => {
+    // restart automatically
+    try { recognition.start(); } catch(e) {}
+  };
+
+  recognition.onerror = (e) => {
+    transcript.innerText = 'Recognition error: ' + (e.error || e.message);
+  };
+}
+
+async function sendToServer(text) {
+  try {
+    const res = await fetch('/api/respond', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({text})});
+    const js = await res.json();
+    transcript.innerText = 'You: ' + text + '\\nAgent: ' + (js.reply_text || '');
+    if(js.audio_url) {
+      replyAudio.style.display = 'block';
+      replyAudio.src = js.audio_url + '?_=' + Date.now();
+      await replyAudio.play().catch(()=>{ /* autoplay blocked */ });
+    }
+  } catch (e) {
+    transcript.innerText = 'Send error: ' + e.message;
+  }
+}
+
+showLog.onclick = async () => {
+  const r = await fetch('/api/history');
+  const arr = await r.json();
+  logEl.style.display = 'block';
+  logEl.innerText = JSON.stringify(arr.slice(-8), null, 2);
+};
+
+window.addEventListener('click', ()=>{ try { recognition && recognition.start(); } catch(e) {} }, {once:true});
+</script>
+</body>
+</html>
