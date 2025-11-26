@@ -1,0 +1,17 @@
+﻿[
+  {
+    "id": "pricing",
+    "question": "What are your pricing plans?",
+    "answer": "COMPANY offers Basic, Pro and Enterprise plans depending on your needs."
+  },
+  {
+    "id": "trial",
+    "question": "Do you offer a free trial?",
+    "answer": "Yes, COMPANY provides a 14-day free trial with no credit card required."
+  },
+  {
+    "id": "support",
+    "question": "How can I contact support?",
+    "answer": "You can reach COMPANY support at support@COMPANY.com."
+  }
+]
