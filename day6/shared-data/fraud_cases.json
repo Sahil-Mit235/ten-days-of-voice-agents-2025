@@ -1,0 +1,17 @@
+﻿[
+  {
+    "caseId": "case-001",
+    "userName": "John Doe",
+    "securityIdentifier": "SID12345",
+    "cardEnding": "4242",
+    "transactionAmount": "₹4,999.00",
+    "transactionName": "ABC Industry",
+    "transactionTime": "2025-11-20 18:24:00",
+    "transactionCategory": "e-commerce",
+    "transactionSource": "alibaba.com",
+    "securityQuestion": "What is your pet's name?",
+    "securityAnswer": "fluffy",
+    "status": "pending_review",
+    "outcomeNote": ""
+  }
+]
