@@ -1,0 +1,22 @@
+﻿[
+  {"id":"bread_wholewheat","name":"Whole Wheat Bread","category":"Groceries","price":40,"unit":"loaf","tags":["vegan"]},
+  {"id":"milk_1l","name":"Fresh Milk 1L","category":"Groceries","price":60,"unit":"bottle","tags":["dairy"]},
+  {"id":"eggs_12","name":"Eggs (12 pcs)","category":"Groceries","price":120,"unit":"pack","tags":["protein"]},
+  {"id":"pasta_500g","name":"Pasta 500g","category":"Groceries","price":80,"unit":"pack","tags":["vegan"]},
+  {"id":"pasta_sauce","name":"Tomato Pasta Sauce 350g","category":"Groceries","price":110,"unit":"jar","tags":["vegetarian"]},
+  {"id":"peanut_butter","name":"Peanut Butter 350g","category":"Groceries","price":180,"unit":"jar","tags":["vegan"]},
+  {"id":"butter_200g","name":"Unsalted Butter 200g","category":"Groceries","price":150,"unit":"pack","tags":["dairy"]},
+  {"id":"apple_1kg","name":"Apples 1kg","category":"Groceries","price":160,"unit":"kg","tags":["vegan","fruit"]},
+  {"id":"banana_1kg","name":"Bananas 1kg","category":"Groceries","price":90,"unit":"kg","tags":["vegan","fruit"]},
+  {"id":"cheese","name":"Cheddar Cheese 200g","category":"Groceries","price":220,"unit":"pack","tags":["dairy"]},
+  {"id":"chicken_1kg","name":"Chicken (boneless) 1kg","category":"Groceries","price":280,"unit":"kg","tags":["meat"]},
+  {"id":"pizza_margherita","name":"Margherita Pizza (ready)","category":"Prepared Food","price":299,"unit":"piece","tags":["vegetarian"]},
+  {"id":"sandwich_club","name":"Club Sandwich","category":"Prepared Food","price":199,"unit":"piece","tags":["ready"]},
+  {"id":"chips","name":"Potato Chips 150g","category":"Snacks","price":60,"unit":"pack","tags":["snack"]},
+  {"id":"cookie_box","name":"Cookie Box 200g","category":"Snacks","price":120,"unit":"box","tags":["snack"]},
+  {"id":"orange_juice","name":"Orange Juice 1L","category":"Beverages","price":140,"unit":"bottle","tags":["vegan"]},
+  {"id":"coffee_200g","name":"Ground Coffee 200g","category":"Groceries","price":299,"unit":"pack","tags":["beverage"]},
+  {"id":"noodles_cup","name":"Instant Noodles Cup","category":"Snacks","price":45,"unit":"cup","tags":["instant"]},
+  {"id":"tomato_1kg","name":"Tomatoes 1kg","category":"Groceries","price":70,"unit":"kg","tags":["vegan","vegetable"]},
+  {"id":"lettuce","name":"Lettuce (1 head)","category":"Groceries","price":50,"unit":"piece","tags":["vegan","vegetable"]}
+]

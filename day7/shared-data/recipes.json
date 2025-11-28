@@ -1,0 +1,15 @@
+﻿{
+  "peanut_butter_sandwich": [
+    {"id":"bread_wholewheat","qty":2},
+    {"id":"peanut_butter","qty":1}
+  ],
+  "pasta_for_two": [
+    {"id":"pasta_500g","qty":1},
+    {"id":"pasta_sauce","qty":1},
+    {"id":"cheese","qty":1}
+  ],
+  "fruit_basket": [
+    {"id":"apple_1kg","qty":1},
+    {"id":"banana_1kg","qty":1}
+  ]
+}
