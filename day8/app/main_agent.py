@@ -105,20 +105,22 @@ class GameMaster:
 
     def tts_speak(self, text):
         """
-        TTS hook: by default uses system TTS (where available) or prints a note.
-        Replace this function to call Murf Falcon TTS API or other TTS service.
+        TTS hook:
+        - Tries to use pyttsx3 (pure-Python offline TTS).
+        - If pyttsx3 is not installed or fails, falls back to a printed placeholder.
+        - Replace this method with Murf Falcon integration for higher-quality voices.
         """
-        # simple Windows TTS using PowerShell 'Add-Type' approach
-        if sys.platform.startswith("win"):
-            try:
-                import subprocess, shlex
-                ps = f'Add-Type –AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak("{text.replace(\'"\', \'\\\\"\')}");'
-                subprocess.call(["powershell", "-Command", ps])
-                return
-            except Exception:
-                pass
-        # fallback: print a divider telling user to speak or use their TTS
-        print("[TTS placeholder] (replace with Murf Falcon TTS integration)")
+        try:
+            import pyttsx3
+            engine = pyttsx3.init()
+            # reduce verbosity and speak the text
+            engine.say(text)
+            engine.runAndWait()
+            return
+        except Exception:
+            pass
+        # fallback
+        print("[TTS placeholder] (install pyttsx3 or integrate Murf Falcon TTS)")
 
     # ---------- Gameplay logic ----------
     def start_session(self):

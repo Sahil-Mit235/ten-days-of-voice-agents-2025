@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "started_at": "2025-11-29T11:58:24.022301Z",
+    "universe": "fantasy"
+  },
+  "player": {
+    "name": "Aldric",
+    "hp": 10,
+    "max_hp": 10,
+    "attributes": {
+      "strength": 1,
+      "intelligence": 1,
+      "luck": 1
+    },
+    "inventory": [
+      "small silver dagger",
+      "guiding feather"
+    ]
+  },
+  "location": {
+    "name": "Edge of Emberfall",
+    "desc": "A whispering forest where runes glow faintly."
+  },
+  "npcs": {
+    "elder": {
+      "name": "Elder Mira",
+      "status": "friendly"
+    }
+  },
+  "events": [
+    {
+      "event": "befriended_creature",
+      "time": "2025-11-29T11:59:40.150059Z"
+    }
+  ],
+  "quests": {
+    "active": [
+      {
+        "id": "crystal",
+        "desc": "Find the Crystal of Emberfall",
+        "started_at": "2025-11-29T11:58:50.906948Z"
+      }
+    ],
+    "completed": []
+  },
+  "history": [
+    {
+      "time": "2025-11-29T11:58:37.941153Z",
+      "speaker": "GM",
+      "text": "Welcome to the adventure. You are the Game Master of a D&D-style voice-only adventure set in a fantasy universe of magic, ancient forests, ruins, and mythical creatures. What is your character's name?"
+    },
+    {
+      "time": "2025-11-29T11:58:50.906948Z",
+      "speaker": "Player",
+      "text": "Aldric"
+    },
+    {
+      "time": "2025-11-29T11:59:01.970495Z",
+      "speaker": "GM",
+      "text": "Well met, Aldric. The village elder, Elder Mira, says shadow creatures stole the Crystal of Emberfall. The elder gives you a small silver dagger. What do you do next?"
+    },
+    {
+      "time": "2025-11-29T11:59:05.692635Z",
+      "speaker": "Player",
+      "text": "I follow the owlI follow the owlI follow the owl"
+    },
+    {
+      "time": "2025-11-29T11:59:13.974566Z",
+      "speaker": "GM",
+      "text": "A faint glow appears beneath a pile of leaves. You sense the Crystal of Emberfall nearby. Do you dig, call for help, or leave it?"
+    },
+    {
+      "time": "2025-11-29T11:59:25.702563Z",
+      "speaker": "Player",
+      "text": "inspect the altar"
+    },
+    {
+      "time": "2025-11-29T11:59:33.766367Z",
+      "speaker": "GM",
+      "text": "You look around: A whispering forest where runes glow faintly.. You see an old altar and a path deeper into the woods. What do you do?"
+    },
+    {
+      "time": "2025-11-29T11:59:40.150059Z",
+      "speaker": "Player",
+      "text": "I try to befriend the wolf"
+    },
+    {
+      "time": "2025-11-29T11:59:47.100163Z",
+      "speaker": "GM",
+      "text": "Your gentle action succeeds. The creature becomes an ally and guides you to a hidden path. What do you do next?"
+    },
+    {
+      "time": "2025-11-29T11:59:49.053402Z",
+      "speaker": "Player",
+      "text": "inventory"
+    },
+    {
+      "time": "2025-11-29T11:59:54.861799Z",
+      "speaker": "GM",
+      "text": "You check your inventory: small silver dagger, guiding feather. What do you do next?"
+    },
+    {
+      "time": "2025-11-29T11:59:57.470309Z",
+      "speaker": "Player",
+      "text": "save game"
+    }
+  ]
+}
