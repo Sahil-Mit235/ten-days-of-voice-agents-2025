@@ -110,7 +110,7 @@ class OrderManager:
                 o['status'] = STATUS_SEQUENCE[i+1]
                 o['lastUpdated'] = datetime.datetime.now().isoformat()
                 save_json(ORDERS_PATH, self.orders)
-                self._log(f'Order {order_id} status advanced to {o[\"status\"]}')
+                self._log(f'Order {order_id} status advanced to {o["status"]}')
                 return o['status']
         except ValueError:
             pass
@@ -120,7 +120,7 @@ class OrderManager:
         os.makedirs(LOG_DIR, exist_ok=True)
         f = os.path.join(LOG_DIR, f'orders_{datetime.date.today().isoformat()}.log')
         with open(f, 'a', encoding='utf-8') as lf:
-            lf.write(f'[{datetime.datetime.now().isoformat()}] {text}\\n')
+            lf.write(f'[{datetime.datetime.now().isoformat()}] {text}\n')
 
 class OrderingAgent:
     def __init__(self):
@@ -135,7 +135,7 @@ class OrderingAgent:
     def show_catalog(self):
         items = self.catalog.list_all()
         for it in items:
-            print(f\"{it['id']} — {it['name']} ({it['category']}) — ₹{it['price']}/{it['unit']}\")
+            print(f"{it['id']} — {it['name']} ({it['category']}) — ₹{it['price']}/{it['unit']}")
 
     def add_item(self, id_or_name, qty=1):
         # If exact id given
@@ -146,21 +146,22 @@ class OrderingAgent:
             if len(results) == 1:
                 item = results[0]
             elif len(results) > 1:
-                simulate_voice('Alicia', f'I found multiple items for \\\"{id_or_name}\\\". Please be more specific.')
+                simulate_voice('Alicia', f'I found multiple items for \"{id_or_name}\". Please be more specific.')
                 for r in results:
                     print(r['id'], r['name'])
                 return
             else:
-                simulate_voice('Alicia', f'No item found for \\\"{id_or_name}\\\".')
+                simulate_voice('Alicia', f'No item found for \"{id_or_name}\".')
                 return
         self.cart.add(item['id'], qty)
-        simulate_voice('Alicia', f'Added {qty} x {item[\"name\"]} to your cart.')
+        simulate_voice('Alicia', f'Added {qty} x {item["name"]} to your cart.')
 
-    def add_recipe(self, recipe_key, servings=1):
-        r = self.recipes.get(recipe_key)
-        if not r:
-            simulate_voice('Alicia', f'I don\\'t know the recipe \\\"{recipe_key}\\\".')
-            return
+        def add_recipe(self, recipe_key, servings=1):
+             r = self.recipes.get(recipe_key)
+             if not r:
+                simulate_voice("Alicia", f"I don't know the recipe '{recipe_key}'.")
+                return
+
         for entry in r:
             self.cart.add(entry['id'], int(entry.get('qty',1))*int(servings))
         simulate_voice('Alicia', f'Added ingredients for {recipe_key} (servings: {servings}).')
@@ -172,7 +173,7 @@ class OrderingAgent:
             return
         print('Cart:')
         for it in summary:
-            print(f\"{it['qty']} x {it['name']} — ₹{it['unit_price']} each — subtotal ₹{it['subtotal']}\")
+            print(f"{it['qty']} x {it['name']} — ₹{it['unit_price']} each — subtotal ₹{it['subtotal']}")
         print(f'Total: ₹{total}')
 
     def remove_item(self, item_id):
@@ -190,12 +191,12 @@ class OrderingAgent:
             return
         print('Final summary:')
         for it in summary:
-            print(f\"{it['qty']} x {it['name']} — ₹{it['subtotal']}\")
+            print(f"{it['qty']} x {it['name']} — ₹{it['subtotal']}")
         print(f'Total: ₹{total}')
         name = input('Your name> ').strip()
         address = input('Delivery address> ').strip()
         order = self.orders.new_order(name, address, summary, total)
-        simulate_voice('Alicia', f'Order placed. Your order id is {order[\"orderId\"]}.')
+        simulate_voice('Alicia', f'Order placed. Your order id is {order["orderId"]}.')
         self.cart.clear()
 
     def show_orders(self):
@@ -204,14 +205,14 @@ class OrderingAgent:
             simulate_voice('Alicia', 'No orders found.')
             return
         for o in all_orders:
-            print(f\"{o['orderId']} — {o['customerName']} — ₹{o['total']} — {o['status']} — {o['createdAt']}\")
-    
+            print(f"{o['orderId']} — {o['customerName']} — ₹{o['total']} — {o['status']} — {o['createdAt']}")
+
     def track_order(self, order_id):
         o = self.orders.find_order(order_id)
         if not o:
             simulate_voice('Alicia', 'Order not found.')
             return
-        simulate_voice('Alicia', f\"Order {order_id} is currently: {o['status']}. Last update: {o.get('lastUpdated')}\")
+        simulate_voice('Alicia', f"Order {order_id} is currently: {o['status']}. Last update: {o.get('lastUpdated')}")
         print(json.dumps(o, indent=2))
 
     def reorder(self, order_id):
@@ -225,18 +226,32 @@ class OrderingAgent:
         simulate_voice('Alicia', f'Rebuilt cart from order {order_id}. Check cart and place order when ready.')
 
     def advance_status(self, order_id):
-        status = self.orders.advance_status(order_id)
-        if status:
-            simulate_voice('Alicia', f'Order {order_id} advanced to {status}.')
+        o = self.orders.find_order(order_id)
+        if not o:
+            simulate_voice('Alicia', f'Order {order_id} not found.')
+            return
+
+        current = o.get('status', 'received')
+        if current not in STATUS_SEQUENCE:
+            simulate_voice('Alicia', f'Cannot advance order {order_id}.')
+            return
+
+        idx = STATUS_SEQUENCE.index(current)
+        if idx < len(STATUS_SEQUENCE) - 1:
+            new_status = STATUS_SEQUENCE[idx + 1]
+            o['status'] = new_status
+            o['lastUpdated'] = datetime.datetime.now().isoformat()
+            save_json(ORDERS_PATH, self.orders)
+            simulate_voice('Alicia', f'Order {order_id} advanced to {new_status}.')
         else:
-            simulate_voice('Alicia', f'Could not advance order {order_id}.')
+            simulate_voice('Alicia', f'Order {order_id} is already delivered.')
 
 def repl():
     agent = OrderingAgent()
     agent.greet()
     print('Commands: catalog | add <id_or_name> [qty] | recipe <key> [servings] | cart | remove <id> | update <id> <qty> | place | orders | track <orderId> | reorder <orderId> | advance <orderId> | quit')
     while True:
-        cmd = input('\\n> ').strip()
+        cmd = input('\n> ').strip()
         if not cmd:
             continue
         parts = cmd.split()

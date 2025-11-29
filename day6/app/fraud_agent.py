@@ -15,11 +15,11 @@ def save_cases(cases):
     os.makedirs(LOG_DIR, exist_ok=True)
     log_file = os.path.join(LOG_DIR, f'fraud_log_{datetime.date.today().isoformat()}.log')
     with open(log_file, 'a', encoding='utf-8') as lf:
-        lf.write(f\"[{datetime.datetime.now().isoformat()}] Cases saved\\n\")
+        lf.write(f"[{datetime.datetime.now().isoformat()}] Cases saved\\n")
 
 def simulate_voice(voice_name, text):
     # placeholder for Murf Falcon TTS + LiveKit
-    print(f\"[{voice_name} VOICE] {text}\")
+    print(f"[{voice_name} VOICE] {text}")
 
 def find_case_by_username(username, cases):
     for c in cases:
@@ -39,8 +39,8 @@ def verify_user(case):
         return False
 
 def present_transaction(case):
-    simulate_voice('Alicia', f\"We detected a suspicious transaction on card ending {case.get('cardEnding')}.\")
-    simulate_voice('Alicia', f\"Merchant: {case.get('transactionName')} | Amount: {case.get('transactionAmount')} | Source: {case.get('transactionSource')} | Time: {case.get('transactionTime')}\")
+    simulate_voice('Alicia', f"We detected a suspicious transaction on card ending {case.get('cardEnding')}.")
+    simulate_voice('Alicia', f"Merchant: {case.get('transactionName')} | Amount: {case.get('transactionAmount')} | Source: {case.get('transactionSource')} | Time: {case.get('transactionTime')}")
     print('\\nDo you recognize and confirm this transaction? (yes/no)')
 
 def update_case_status(case, result, note=''):
@@ -84,7 +84,7 @@ def fraud_call_flow():
         update_case_status(case, 'verification_failed', note='Unclear response from customer.')
 
     save_cases(cases)
-    simulate_voice('Ken', f\"Case {case.get('caseId')} updated. Current status: {case.get('status')}\")
+    simulate_voice('Ken', f"Case {case.get('caseId')} updated. Current status: {case.get('status')}")
     print('\\nFinal case record:')
     print(json.dumps(case, indent=2))
 

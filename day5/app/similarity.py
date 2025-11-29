@@ -11,6 +11,4 @@ def similarity_score(a, b):
     if not a_tokens or not b_tokens:
         return 0.0
     common = a_tokens.intersection(b_tokens)
-    # Jaccard-like simple score
-    score = len(common) / float(len(a_tokens.union(b_tokens)))
-    return score
+    return len(common) / float(len(a_tokens.union(b_tokens)))
